@@ -23,7 +23,7 @@
     "enable": false,
     "whiteListIds": [61572240295227]
   },
-  "nickNameBot": "「 𝐍𝐈𝐑𝐎𝐁 」(∩˃o˂∩)♡",
+  "nickNameBot": "BOT",
   "prefix": "/",
   "database": {
     "type": "sqlite",
