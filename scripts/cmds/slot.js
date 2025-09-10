@@ -3,27 +3,41 @@ const cooldowns = new Map();
 module.exports = {
   config: {
     name: "slot",
-    version: "3.2",
-    author: "Arijit",
+    version: "4.0",
+    author: "Arijit (Styled by GPT-5)",
     countDown: 12,
     shortDescription: {
-      en: "slot game 🙂",
+      en: "🎰 Stylish Slot Machine",
     },
     longDescription: {
-      en: "Try your luck in a slot game",
+      en: "Spin the slot machine and test your luck with a fresh stylish design ✨",
     },
     category: "game",
   },
 
   langs: {
     en: {
-      invalid_amount: "𝗣𝗹𝗲𝗮𝘀𝗲 𝗲𝗻𝘁𝗲𝗿 𝗮 𝘃𝗮𝗹𝗶𝗱 𝗮𝗺𝗼𝘂𝗻𝘁 😿💅",
-      not_enough_money: "𝗣𝗹𝗲𝗮𝘀𝗲 𝗰𝗵𝗲𝗰𝗸 𝘆𝗼𝘂𝗿 𝗯𝗮𝗹𝗮𝗻𝗰𝗲 🤡",
-      max_limit: "❌ | The maximum bet amount is 100M.",
-      limit_reached: "❌ | 𝐘𝐨𝐮 𝐡𝐚𝐯𝐞 𝐫𝐞𝐚𝐜𝐡𝐞𝐝 𝐲𝐨𝐮𝐫 𝐬𝐥𝐨𝐭 𝐥𝐢𝐦𝐢𝐭. 𝐓𝐫𝐲 𝐚𝐠𝐚𝐢𝐧 𝐢𝐧 %1.",
-      jackpot_message: ">🎀\n𝐉𝐚𝐜𝐤𝐩𝐨𝐭! 𝐘𝐨𝐮 𝐰𝐨𝐧 $%1 𝐰𝐢𝐭𝐡 𝐭𝐡𝐫𝐞𝐞 ❤ 𝐬𝐲𝐦𝐛𝐨𝐥𝐬, 𝐁𝐚𝐛𝐲!\n• 𝐆𝐚𝐦𝐞 𝐑𝐞𝐬𝐮𝐥𝐭𝐬 [ %2 | %3 | %4 ]",
-      win_message: ">🎀\n• 𝐁𝐚𝐛𝐲, 𝐘𝐨𝐮 𝐰𝐨𝐧 $%1\n• 𝐆𝐚𝐦𝐞 𝐑𝐞𝐬𝐮𝐥𝐭𝐬 [ %2 | %3 | %4 ]",
-      lose_message: ">🎀\n• 𝐁𝐚𝐛𝐲, 𝐘𝐨𝐮 𝐥𝐨𝐬𝐭 $%1\n• 𝐆𝐚𝐦𝐞 𝐑𝐞𝐬𝐮𝐥𝐭𝐬 [ %2 | %3 | %4 ]",
+      invalid_amount: "⚠️ | Please enter a **valid bet amount** 💵",
+      not_enough_money: "💸 | Insufficient balance! Please check your wallet.",
+      max_limit: "🚫 | The **maximum bet** allowed is `100M`.",
+      limit_reached: "🕒 | You’ve reached your slot limit. Try again in **%1** ⏳",
+      jackpot_message: 
+        "🎉✨ 𝗝𝗔𝗖𝗞𝗣𝗢𝗧 ✨🎉\n" +
+        "💖 You hit **3x ❤** and won `$%1`!\n\n" +
+        "🎰 Result: [ %2 | %3 | %4 ]\n" +
+        "💎 Enjoy your lucky moment!",
+
+      win_message: 
+        "🥳 𝗪𝗜𝗡𝗡𝗘𝗥 🥳\n" +
+        "💰 You won `$%1`!\n\n" +
+        "🎰 Result: [ %2 | %3 | %4 ]\n" +
+        "🌟 Keep spinning, luck is on your side!",
+
+      lose_message: 
+        "😿 𝗟𝗢𝗦𝗘𝗥 😿\n" +
+        "❌ You lost `$%1`...\n\n" +
+        "🎰 Result: [ %2 | %3 | %4 ]\n" +
+        "💡 Tip: Maybe next spin brings fortune ✨",
     },
   },
 
@@ -45,7 +59,7 @@ module.exports = {
       const diff = nextUse - now;
       const hours = Math.floor(diff / (60 * 60 * 1000));
       const minutes = Math.floor((diff % (60 * 60 * 1000)) / (60 * 1000));
-      return message.reply(getLang("limit_reached", `${hours}𝐡 ${minutes}𝐦`));
+      return message.reply(getLang("limit_reached", `${hours}h ${minutes}m`));
     }
 
     if (isNaN(amount) || amount <= 0) return message.reply(getLang("invalid_amount"));
@@ -68,12 +82,12 @@ module.exports = {
 };
 
 function generateResult() {
-  const slots = ["💚", "💛", "💙", "💜", "🤎", "🤍", "❤️"];
+  const slots = ["💚", "💛", "💙", "💜", "🤎", "🤍", "❤"];
   const r = Math.random() * 100;
 
-  if (r < 5) return ["❤️", "❤️", "❤️"]; // Jackpot
+  if (r < 5) return ["❤", "❤", "❤"]; // Jackpot
   if (r < 20) {
-    const symbol = slots.filter(e => e !== "❤️")[Math.floor(Math.random() * 6)];
+    const symbol = slots.filter(e => e !== "❤")[Math.floor(Math.random() * 6)];
     return [symbol, symbol, symbol]; // 5x
   }
   if (r < 65) {
@@ -89,7 +103,7 @@ function generateResult() {
 
 function calculateWinnings([a, b, c], bet) {
   if (a === b && b === c) {
-    if (a === "❤️") return bet * 10;
+    if (a === "❤") return bet * 10;
     return bet * 5;
   }
   if (a === b || b === c || a === c) return bet * 3;
@@ -98,7 +112,7 @@ function calculateWinnings([a, b, c], bet) {
 
 function formatResult([a, b, c], winnings, getLang) {
   const formatted = formatMoney(Math.abs(winnings));
-  if (a === b && b === c && a === "❤️")
+  if (a === b && b === c && a === "❤")
     return getLang("jackpot_message", formatted, a, b, c);
   if (winnings > 0)
     return getLang("win_message", formatted, a, b, c);
@@ -110,9 +124,9 @@ function randomEmoji(arr) {
 }
 
 function formatMoney(amount) {
-  if (amount >= 1e12) return (amount / 1e12).toFixed(2) + "𝗧";
-  if (amount >= 1e9) return (amount / 1e9).toFixed(2) + "𝗕";
-  if (amount >= 1e6) return (amount / 1e6).toFixed(2) + "𝐌";
-  if (amount >= 1e3) return (amount / 1e3).toFixed(2) + "𝗞";
+  if (amount >= 1e12) return (amount / 1e12).toFixed(2) + "T";
+  if (amount >= 1e9) return (amount / 1e9).toFixed(2) + "B";
+  if (amount >= 1e6) return (amount / 1e6).toFixed(2) + "M";
+  if (amount >= 1e3) return (amount / 1e3).toFixed(2) + "K";
   return amount.toString();
-        }
+}
