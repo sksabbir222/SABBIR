@@ -8,7 +8,7 @@ const log = require("./logger/log.js");
 
 // === Express server to keep Render service alive ===
 const app = express();
-const PORT = process.env.PORT || 3000;
+const PORT = process.env.PORT || 8989;
 
 app.get("/", (req, res) => {
 	res.send("KAKASHI BOT RUNNING \n author: nirob \n Status: smooth 🥵");
