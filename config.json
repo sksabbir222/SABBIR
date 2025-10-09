@@ -12,20 +12,20 @@
 	"antiInbox": false,
 	"language": "en",
 	"notesLanguage": "change to your language with ISO 639-1 code, available languages: vi (Vietnamese), en (English)",
-	"nickNameBot": "「 𝐍𝐈𝐑𝐎𝐁 」(∩˃o˂∩)♡",
+	"nickNameBot": "Mr Haccr",
 	"prefix": "/",
 	"api":"https://noobs-api.rf.gd/dipto",
 	"adminOnly": {
 		"enable": false,
-		"ignoreCommand": [61572240295227]
+		"ignoreCommand": [100074831048424]
 	},
 	"adminBot": [    
 	"61572240295227",
-    "61579988683968"
+    "100074831048424"
   ],
 	"whiteListMode": {
 		"enable": false,
-		"whiteListIds": [61572240295227],
+		"whiteListIds": [100074831048424],
 		"notes": "if you enable this feature, only the ids in the whiteListIds list can use the bot"
 	},
 	"whiteListModeThread": {
