@@ -1,4 +1,4 @@
- const axios = require('axios');
+const axios = require('axios');
 const baseApiUrl = async () => {
     return "http://www.noobs-api.rf.gd/dipto";
 };
@@ -17,12 +17,7 @@ module.exports.config = {
     }
 };
 
-module.exports.onStart = async ({
-    api,
-    event,
-    args,
-    usersData
-}) => {
+module.exports.onStart = async ({ api, event, args, usersData }) => {
     const link = `${await baseApiUrl()}/baby`;
     const dipto = args.join(" ").toLowerCase();
     const uid = event.senderID;
@@ -53,10 +48,7 @@ module.exports.onStart = async ({
                     const number = Object.keys(item)[0];
                     const value = item[number];
                     const name = (await usersData.get(number)).name;
-                    return {
-                        name,
-                        value
-                    };
+                    return { name, value };
                 }));
                 teachers.sort((a, b) => b.value - a.value);
                 const output = teachers.map((t, i) => `${i + 1}/ ${t.name}: ${t.value}`).join('\n');
@@ -129,11 +121,7 @@ module.exports.onStart = async ({
     }
 };
 
-module.exports.onReply = async ({
-    api,
-    event,
-    Reply
-}) => {
+module.exports.onReply = async ({ api, event, Reply }) => {
     try {
         if (event.type == "message_reply") {
             const a = (await axios.get(`${await baseApiUrl()}/baby?text=${encodeURIComponent(event.body?.toLowerCase())}&senderID=${event.senderID}&font=1`)).data.reply;
@@ -152,28 +140,34 @@ module.exports.onReply = async ({
     }
 };
 
-module.exports.onChat = async ({
-    api,
-    event,
-    message
-}) => {
+module.exports.onChat = async ({ api, event, message }) => {
     try {
-        const body = event.body ? event.body?.toLowerCase() : ""
+        const body = event.body ? event.body?.toLowerCase() : "";
         if (body.startsWith("baby") || body.startsWith("bby") || body.startsWith("bot") || body.startsWith("jan") || body.startsWith("babu") || body.startsWith("kakashi")) {
-            const arr = body.replace(/^\S+\s*/, "")
-            const randomReplies = ["Ooo bby bolecho 🌚", "Yes 😀, I am nirob bot here_/- 🖤", "jake take baby bolos lojja lage na 😒", "Bolo jaan ki korte pari tmr jonno"];
-            if (!arr) {
+            const arr = body.replace(/^\S+\s*/, "");
+            const randomReplies = [
+                "Aree bby! eta abar ki nama disos 😭",
+                "Hain re jaan, ektu slow net chilo 😎",
+                "Bby bolle amio melt hoye jai re 😏",
+                "Tui abar baby bolli? arey sharam kor 😹",
+                "Oii bby... ekta cha diye ja ☕",
+                "Bol bby, ki korbo tor jonno 🥱",
+                "Bby mood on 😌",
+                "Oii pagol! abar baby bolos naki 😂"
+            ];
 
+            if (!arr) {
                 await api.sendMessage(randomReplies[Math.floor(Math.random() * randomReplies.length)], event.threadID, (error, info) => {
-                    if (!info) message.reply("info obj not found")
+                    if (!info) message.reply("info obj not found");
                     global.GoatBot.onReply.set(info.messageID, {
                         commandName: this.config.name,
                         type: "reply",
                         messageID: info.messageID,
                         author: event.senderID
                     });
-                }, event.messageID)
+                }, event.messageID);
             }
+
             const a = (await axios.get(`${await baseApiUrl()}/baby?text=${encodeURIComponent(arr)}&senderID=${event.senderID}&font=1`)).data.reply;
             await api.sendMessage(a, event.threadID, (error, info) => {
                 global.GoatBot.onReply.set(info.messageID, {
@@ -183,7 +177,7 @@ module.exports.onChat = async ({
                     author: event.senderID,
                     a
                 });
-            }, event.messageID)
+            }, event.messageID);
         }
     } catch (err) {
         return api.sendMessage(`Error: ${err.message}`, event.threadID, event.messageID);
